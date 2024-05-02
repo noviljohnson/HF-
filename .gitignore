@@ -4,3 +4,4 @@ test_trainer/
 tokenized_datasets/
 google-bert_bert-base-cased/
 bert_base_cased_finetuned/
+test_file/
