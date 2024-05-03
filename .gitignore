@@ -6,3 +6,7 @@ google-bert_bert-base-cased/
 bert_base_cased_finetuned/
 test_file/
 Fine_Tune_LLM/
+flan_t5_fine_tuned/
+flan_t5_fine_tuned_nj/
+flan_t5_tokenizer/
+trained-model/
