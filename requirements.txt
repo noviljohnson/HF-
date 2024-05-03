@@ -60,6 +60,7 @@ pure-eval @ file:///home/conda/feedstock_root/build_artifacts/pure_eval_16428759
 pyarrow==16.0.0
 pyarrow-hotfix==0.6
 Pygments @ file:///home/conda/feedstock_root/build_artifacts/pygments_1700607939962/work
+PyPDF2==3.0.1
 python-dateutil @ file:///home/conda/feedstock_root/build_artifacts/python-dateutil_1709299778482/work
 pytz==2024.1
 pywin32==305.1
@@ -73,6 +74,7 @@ roboflow==1.1.21
 safetensors==0.4.3
 scikit-learn==1.4.2
 scipy==1.13.0
+sentencepiece==0.2.0
 six @ file:///tmp/build/80754af9/six_1644875935023/work
 stack-data @ file:///home/conda/feedstock_root/build_artifacts/stack_data_1669632077133/work
 supervision==0.18.0
