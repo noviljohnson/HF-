@@ -10,3 +10,6 @@ flan_t5_fine_tuned/
 flan_t5_fine_tuned_nj/
 flan_t5_tokenizer/
 trained-model/
+phi3_mini128k_instruct/
+phi3_mini_tokenizer/
+results/
