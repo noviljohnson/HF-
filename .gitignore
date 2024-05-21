@@ -13,3 +13,5 @@ trained-model/
 phi3_mini128k_instruct/
 phi3_mini_tokenizer/
 results/
+phi3_mini_tokenizer_4k/
+Phi-3-mini-4k-instruct/
