@@ -15,3 +15,6 @@ phi3_mini_tokenizer/
 results/
 phi3_mini_tokenizer_4k/
 Phi-3-mini-4k-instruct/
+phi-3-mini-QLoRA/
+peft-flant5b-ft-1717060758/
+wandb/
