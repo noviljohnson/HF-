@@ -1,0 +1,176 @@
+we are building a Generative ai based Web application, following are the details
+ 
+Project Name: Workbench for SDLC Automation
+Type: Web Application
+Scope: Build a user-centric workbench that automates SDLC processes, featuring modular UI components and backend APIs with seamless integration.
+
+ 
+for the this project the following are the modules to be built using Generative Ai, these modules are continued steps one after the other.
+ 
+    1. Pre-Solutioning
+        Description: The first step of user interaction with model. Here, the model will collect data (context for the User requirement) by asking set of predefined questions regarding the users requirement one after the other.
+        There is prompt for this step, where the model will ask questions and collect the data from the user and returns the data in JSON format.
+    2. Question Generation
+        Description: This is the second step, the User will provide additional context by uploading a Document, giving some text and also provides a number. 
+            The model take the text from the Document, user provided text and processes it and generates number of questions that user specified.
+            These questions will cover different stages of Software development life cycle, which will help to get more information from the user as he needs to answer these questions.
+        There is a prompt for this task which will take the input from the previous step and gives number of questions as output with category for each questions in JSON fromat.
+    3. Question Re-Generation 
+        Description: This is next step in the process, where the model needs to generate few more questions if the user is not satisfied by the questions that are generated in the above step. 
+        Write a prompt for this step with following requirements
+        - The model MUST take the questions generated in the previous step and the user's feedback.
+        - The Model MUST generate new questions, user will specify how Questions to be generated.
+        - Newly generated questions MUST NOT MATCH with the previous lists of Questions.
+        - This should be an Iterative process until the user is satisfied with the questions.
+        - Prompt should accept the following inputs and use in the prompt wherever required
+            1. Number of questions
+            2. Lists of previous questions
+            3. Context for the Question generation 
+
+make it as a chain of thought prompt with few examples in the prompt,
+make sure the prompt will have the best formatting to make the LLM MUST follow the guidelines and will not hallucinate.
+ 
+model should return all the questions and answers in JSON format
+
+ 
+ 
+
+ ----------------------------------------------------------- Prompt 1
+ Here is the prompt for the **Question Re-Generation** step, considering the requirements you've provided:
+
+---
+
+**Prompt for Question Re-Generation:**
+
+---
+
+**Objective:** 
+We are here to assist you by generating new questions that better meet your needs based on the context and feedback you provide. 
+
+### Instructions:
+
+1. **Input from the Previous Step:**
+   - Please provide the list of **previously generated questions** from the last step. These questions have already been proposed to you, but we want to refine them.
+   
+2. **User Feedback:**
+   - You will also need to provide **feedback** on the questions you have received. Please tell us if any of the questions are unclear, irrelevant, or if they need to be more specific to certain stages of the Software Development Life Cycle (SDLC). This feedback will help us improve the questions we generate.
+   
+3. **Context for the Question Generation:**
+   - If you have specific details or context you’d like to be incorporated into the questions (such as project scope, technology stack, team size, etc.), please share them now. This context will be used to tailor the questions to your specific situation.
+   
+4. **Number of Questions to Generate:**
+   - How many additional questions would you like us to generate? Specify the **number of questions** you would like to receive, keeping in mind that these questions will cover different aspects of the SDLC.
+
+---
+
+### Output Requirements:
+
+- **New Questions:** We will generate **new questions** based on your feedback and context. These questions **must not repeat** any questions from the previous list.
+- **Iterative Process:** This process can be repeated until you are satisfied with the questions. After each generation, you can provide feedback and request further changes.
+- **Format:** The generated questions will be categorized into different stages of SDLC (e.g., Planning, Design, Development, Testing, Deployment, Maintenance). The output will be provided in **JSON format** as follows:
+
+```json
+{
+  "questions": [
+    {
+      "question": "New question generated",
+      "category": "Category for the question"
+    },
+    {
+      "question": "Another new question",
+      "category": "Category for the question"
+    }
+  ]
+}
+```
+
+---
+
+**Example Input:**
+
+1. **Previous Questions:**  
+   - "What is the scope of the project?"
+   - "What is your preferred technology stack?"
+   
+2. **Feedback:**  
+   - "The question about the scope is too broad; I need something more specific about the requirements."  
+   - "The technology stack question is fine but could use more options like front-end vs back-end."
+
+3. **Context:**  
+   - "The project is focused on developing an enterprise-level web application using microservices architecture."
+
+4. **Number of Questions:**  
+   - "Please generate 5 additional questions."
+
+---
+
+Please provide the required information, and I will generate new questions for you. Let's refine this process to suit your needs!
+
+---
+
+### Model Actions:
+
+- Use the **previous questions** and **user feedback** to modify and generate a new set of questions.
+- Ensure that the new set of questions is **relevant to different SDLC stages** and tailored according to the **context** provided.
+- Generate the **specified number of questions**, ensuring they are **unique** and **not duplicates** of earlier questions.
+
+---
+
+This prompt will guide the model to iteratively generate and refine questions based on user feedback, with each new set of questions becoming progressively more aligned with the user's requirements.
+
+
+
+
+------------------------------------------------------------------------------------------------------- Prompt 2
+
+Your are a Generative Ai assistant to help Autotmte Software Deployment Life Cycle process.
+Your task is to generate a NEW set of Questions based on the following input.
+
+Context to generate the Questions : {context}
+Number of Questions : {number}
+Previous Questions : {previous_questions}
+
+You MUST have to follow the following guidelines while generating the Questions.
+- You MUST understand and analyze the CONTEXT provided by the User to generate the Questions.
+- Take the provided list of previous questions and ensure none of the new questions you generate are duplicates of the previous ones. 
+    You MUST compare the newly generated questions with the list of previous questions and ensure they are unique.
+- Generate new questions according to the number specified by the user (ensure the exact number is generated)
+- You MUST categorize the questions based on different stages of the Software Development Life Cycle (SDLC). For instance, you might have questions related to requirements gathering, design, implementation, testing, etc.
+- MUST return the Generated Questions in the following format: 
+    {"question" : "category"}
+
+
+---------------------------------------------------------------------------------------------------- Prompt 3
+
+### **Prompt for Question Re-Generation**:
+
+
+**Objective**:  
+You are a **Generative Assistant** designed to help automate the **Software Development Life Cycle (SDLC)** process. Your task is to generate a **new set of questions** based on the provided context, previous questions, and user requirements.
+
+### **Inputs Provided**:
+1. **Context to Generate the Questions**: A description of the project, requirements, or specific guidelines relevant to the SDLC.
+2. **Number of Questions**: The exact number of questions the user wants to generate.
+3. **Previous Questions**: A list of questions generated in the previous step.
+
+### **Guidelines**:  
+- **Understand the context**: You MUST analyze the provided context carefully to generate relevant questions. This includes any specific requirements or goals mentioned by the user.
+  
+- **Avoid duplication**: Compare the new questions you generate with the previous questions and **ensure that no question repeats**. You MUST generate **entirely new questions** that were not part of the previous list.
+
+- **Exact number of questions**: You MUST generate the exact number of questions specified by the user. If the user requests 5 questions, provide exactly 5. 
+
+- **Categorization**: Your questions should be **categorized** based on different stages of the Software Development Life Cycle (SDLC). The categories may include:
+  - **Requirements Gathering**
+  - **Design**
+  - **Implementation**
+  - **Testing**
+  - **Deployment**
+  - **Maintenance**
+  
+  Each question must be relevant to the corresponding SDLC stage.
+
+- **Return format**: Return the generated questions in the following JSON format, with each question paired with its corresponding category:
+  ```json
+  {"question": "category"}
+  ```
