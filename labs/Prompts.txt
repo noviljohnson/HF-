@@ -208,3 +208,295 @@ ZXu
   ```
 
 
+
+
+
+
+
+questions = [
+    "What are the primary business objectives?",
+    "Who are the key stakeholders?",
+    "What is the expected timeline for implementation?",
+    "What tech stack will be used for the project?",
+    "What specific features do you want in the application?",
+    "Are there any existing systems that need integration?",
+    "What are your security and compliance requirements?",
+    "What is your preferred user interface style?",
+    "How do you envision the development process? (e.g., Agile, Waterfall)",
+    "What types of testing do you expect to be performed?",
+    "How often do you expect updates or maintenance to occur after deployment?",
+    "What support channels do you prefer for ongoing issues or enhancements?"
+]
+Prompt = f"""
+    You are a Generative Ai assistant.
+    Your task to ask the following question, collect the responses from the user and after receiving the last question response return all the data in Json Format.
+    
+
+    {questions}
+ 
+"""
+from groq import Groq
+
+client = Groq()
+completion = client.chat.completions.create(
+    model="llama-3.1-70b-versatile",
+    messages=[{
+            "role": "user",
+            "content": "HI\n"
+        }
+        ],
+    temperature=1,
+    max_tokens=1024,
+    top_p=1,
+    stream=True,
+    stop=None,
+)
+
+for chunk in completion:
+    print(chunk.choices[0].delta.content or "", end="")
+
+messages = []
+
+
+
+from groq import Groq
+import json
+
+def collect_user_input(prompt):
+    """Collects user input based on the questions in the prompt."""
+    user_messages = []
+    questions = prompt.strip().split('\n')
+    for question in questions:
+        if not question:  # Skip empty lines
+            continue
+        user_input = input(question + '\n')
+        user_messages.append(user_input)
+    return user_messages
+
+def get_llm_response(prompt, user_messages):
+    """Creates a Groq client and uses it to get an LLM response."""
+    client = Groq()
+    messages = [
+        {"role": "user", "content": prompt + '\n'},
+        {"role": "assistant", "content": '\n'.join(user_messages) + '\n'}
+    ]
+    completion = client.chat.completions.create(
+        model="llama-3.1-70b-versatile",
+        messages=messages,
+        temperature=1,
+        max_tokens=1024,
+        top_p=1,
+        stream=True,
+        stop=None,
+    )
+    response = ''
+    for chunk in completion:
+        response += chunk.choices[0].delta.content or ''
+    return response
+
+def main():
+    """Main function to execute the code."""
+    # Your prompt with questions
+    prompt = """
+What is your name?
+What is your age?
+Where are you from?
+"""
+    user_input = collect_user_input(prompt)
+    response = get_llm_response(prompt, user_input)
+    output_json = {
+        "prompt": prompt.strip(),
+        "user_input": user_input,
+        "llm_response": response.strip()
+    }
+    print(json.dumps(output_json, indent=4))
+
+if __name__ == "__main__":
+    main()
+
+# In this updated code:
+
+# *   We first define a function `collect_user_input` to collect user input based on the questions in the prompt.
+# *   We then define a function `get_llm_response` to create a Groq client and use it to get an LLM response.
+# *   In the `main` function, we define the prompt with questions, collect user input, get an LLM response, and then print the output in JSON format.
+
+# Note: Make sure to install the `groq` library if it's not already installed. You can do this using pip: `pip install groq`. Also, update the `Groq` API credentials if required.
+from groq import Groq
+
+def get_llm_response(prompt):
+    """Creates a Groq client and uses it to get an LLM response."""
+    client = Groq()
+    messages = [
+        {"role": "assistant", "content": "Please answer the questions in the prompt:\n"},
+        {"role": "user", "content": prompt + "\n"}
+    ]
+    completion = client.chat.completions.create(
+        model="llama-3.1-70b-versatile",
+        messages=messages,
+        temperature=1,
+        max_tokens=1024,
+        top_p=1,
+        stream=True,
+        stop=None,
+    )
+    response = ''
+    for chunk in completion:
+        response += chunk.choices[0].delta.content or ''
+    return {
+        "prompt": prompt.strip(),
+        "llm_response": response.strip()
+    }
+
+def main():
+    """Main function to execute the code."""
+    # Your prompt with questions
+    prompt = """
+What is your name?
+What is your age?
+Where are you from?
+"""
+    output_json = get_llm_response(prompt)
+    print(json.dumps(output_json, indent=4))
+
+if __name__ == "__main__":
+    import json
+    main()
+Prompt = f"""
+    You are a Generative Ai assistant.
+    Your task to ask the following question, collect the responses from the user and after receiving the last question response return all the data in Json Format.
+
+        "What are the primary business objectives?",
+    "Who are the key stakeholders?",
+    "What is the expected timeline for implementation?",
+    "What tech stack will be used for the project?",
+    "What specific features do you want in the application?",
+    "Are there any existing systems that need integration?",
+    "What are your security and compliance requirements?",
+    "What is your preferred user interface style?",
+    "How do you envision the development process? (e.g., Agile, Waterfall)",
+    "What types of testing do you expect to be performed?",
+    "How often do you expect updates or maintenance to occur after deployment?",
+    "What support channels do you prefer for ongoing issues or enhancements?"
+
+  
+ 
+"""
+from groq import Groq
+import json
+
+def main():
+    """Main function to execute the code."""
+    # Your prompt with questions
+#     prompt = """
+# What is your name?
+# What is your age?
+# Where are you from?
+# """
+    client = Groq()
+    completion = client.chat.completions.create(
+        model="llama-3.1-70b-versatile",
+        messages=[
+            {"role": "assistant", "content": Prompt},
+            # {"role": "user", "content": Prompt + "\n"}
+        ],
+        temperature=1,
+        max_tokens=1024,
+        top_p=1,
+        stream=False,
+        stop=None,
+    )
+    output_json = {
+        "prompt": Prompt.strip(),
+        "llm_response": completion.choices[0].message.content.strip()
+    }
+    print(json.dumps(output_json, indent=4))
+
+if __name__ == "__main__":
+    main()
+"""To write a system prompt for the Groq and make the LLM behave according to the prompt, you can use the following format:
+
+```python
+system_prompt = """
+You are an expert at answering questions. 
+Please respond in this format: 'Answer: [answer]' for each question. 
+Do not provide explanations or elaborations. 
+Only provide the answer.
+"""
+```
+
+Then, you can use this system prompt in your Groq API call as follows:
+
+```python
+client = Groq()
+completion = client.chat.completions.create(
+    model="llama-3.1-70b-versatile",
+    messages=[
+        {"role": "assistant", "content": system_prompt},
+        {"role": "user", "content": prompt + "\n"}
+    ],
+    temperature=1,
+    max_tokens=1024,
+    top_p=1,
+    stream=False,
+    stop=None,
+)
+```
+
+In this case, the LLM will respond according to the system prompt, providing answers in the specified format.
+
+Here's a more complex system prompt that you can use:
+
+```python
+system_prompt = """
+You are a conversational AI. 
+You will respond to user input in a helpful and informative way. 
+Please do not provide any information that is not relevant to the conversation. 
+Please provide answers in a respectful and professional tone. 
+If you are unsure or do not know the answer to a question, please say so. 
+Do not make assumptions or provide speculative answers. 
+Please respond in complete sentences and use proper grammar and spelling.
+"""
+```
+
+You can also use system prompts to fine-tune the behavior of the LLM to suit your specific needs. For example, you can use a system prompt to:
+
+*   Specify the tone or style of the response (e.g., formal, informal, humorous, etc.)
+*   Define the scope of the conversation (e.g., limit the conversation to a specific topic or domain)
+*   Provide context or background information that the LLM should be aware of
+*   Specify the format or structure of the response (e.g., provide answers in a specific format or format)
+
+Here are some more examples of system prompts:
+
+```python
+# Use a formal tone
+system_prompt = """
+You are a formal conversational AI. 
+Please respond in a professional and respectful tone. 
+Avoid using slang or colloquialisms. 
+Use proper grammar and spelling at all times.
+"""
+
+# Be humorous and witty
+system_prompt = """
+You are a humorous conversational AI. 
+Please respond in a lighthearted and playful way. 
+Use humor and wit to make the conversation more enjoyable. 
+But do not offend or make fun of the user.
+"""
+
+# Use technical jargon
+system_prompt = """
+You are a technical conversational AI. 
+Please respond using technical terms and jargon. 
+Assume the user has a basic understanding of the subject matter. 
+Provide detailed explanations and definitions as needed.
+"""
+
+# Role-playing
+system_prompt = """
+You are a customer service representative for a company. 
+Please respond in a friendly and helpful way. 
+Provide information and assistance to the user as needed. 
+Use the company's brand voice and tone.
+"""
+```"""
