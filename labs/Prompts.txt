@@ -169,8 +169,26 @@ You are a **Generative Assistant** designed to help automate the **Software Deve
   - **Maintenance**
   
   Each question must be relevant to the corresponding SDLC stage.
+--1
+sk
+--2
+-or-v1-
+--3
+eb3327ac4fc
+--4
+526f886627e
+--5
+ebfad80465e
+--6
+49fee9b63ca
+--7
+15d3bf9f802
+--8
+94e7677e3
 
 - **Return format**: Return the generated questions in the following JSON format, with each question paired with its corresponding category:
   ```json
   {"question": "category"}
   ```
+
+
